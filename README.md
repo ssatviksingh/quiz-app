@@ -33,6 +33,8 @@ npm run dev
 1. Install dependencies:
    ```bash
    npm install
+   npm install next react react-dom framer-motion
+   
 
 
 ## Start dev server:
