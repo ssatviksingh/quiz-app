@@ -1,5 +1,36 @@
 # Frontend Assignment — Starter
 
+## 🎓 Quiz App — Next.js
+
+A beautiful animated quiz UI built using Next.js + TypeScript, designed to match a Figma-style interactive test experience.
+
+🚀 Features
+
+Smooth question transitions
+
+Arrow-key navigation
+
+Answer highlighting
+
+Submit button on last question
+
+Animated score count-up
+
+Cross-fade transitions
+
+Clean UI with glassmorphism effects
+
+100% ready-to-run after install
+
+
+##🛠 Installation
+   ```bash
+git clone https://github.com/YOUR-USERNAME/quiz-app.git
+cd quiz-app
+npm install
+npm run dev
+   ```
+
 ## Tech stack
 - Next.js (App Router)
 - TypeScript
