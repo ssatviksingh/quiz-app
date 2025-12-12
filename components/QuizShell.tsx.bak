@@ -1,0 +1,123 @@
+﻿"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { QUESTIONS } from "../app/questions";
+
+type Props = { initialStep?: number };
+
+export default function QuizShell({ initialStep = 1 }: Props) {
+  const router = useRouter();
+  const reduce = useReducedMotion();
+
+  const total = QUESTIONS.length;
+  const [step, setStep] = useState(Math.min(Math.max(1, initialStep), total));
+  const [answers, setAnswers] = useState<number[]>(Array(total).fill(-1));
+  const [animating, setAnimating] = useState(false);
+  const current = QUESTIONS[step - 1];
+
+  function selectOption(idx: number) {
+    if (animating) return;
+    setAnimating(true);
+
+    const next = [...answers];
+    next[step - 1] = idx;
+    setAnswers(next);
+
+    if (step === total) {
+      const correct = next.reduce((acc, v, i) => acc + (v === QUESTIONS[i].answerIndex ? 1 : 0), 0);
+      const percent = Math.round((correct / total) * 100);
+      setTimeout(() => router.push(`/result?score=${percent}`), 420);
+    } else {
+      setTimeout(() => {
+        setStep(s => Math.min(s + 1, total));
+        setAnimating(false);
+      }, 320);
+    }
+  }
+
+  function prev() {
+    if (!animating && step > 1) setStep(s => s - 1);
+  }
+
+  function next() {
+    if (animating) return;
+    if (step < total) setStep(s => s + 1);
+    else {
+      const correct = answers.reduce((acc, v, i) => acc + (v === QUESTIONS[i].answerIndex ? 1 : 0), 0);
+      const percent = Math.round((correct / total) * 100);
+      router.push(`/result?score=${percent}`);
+    }
+  }
+
+  // NEW: determine filled bars based on step (any index <= step is filled)
+  // This ignores answers; it matches your request: when you're on step N, fill N bars.
+  const filledIndex = step; // 1..total
+
+  return (
+    <div>
+      <header className="text-center mb-6 relative">
+        <h1 className="h1-serif">Test Your Knowledge</h1>
+        <p className="mt-3 inline-block bg-white/80 px-4 py-2 rounded-lg text-sm">Answer all questions to see your results</p>
+      </header>
+
+      <div className="mb-6 flex justify-center gap-6">
+        {QUESTIONS.map((q, i) => {
+          const isFilled = (i + 1) <= filledIndex; // <= step
+          const widthStyle = isFilled ? "100%" : "0%";
+          return (
+            <div key={i} className="w-56">
+              <div className="progress-track" style={{ height: 8 }}>
+                <div className="progress-fill" style={{ width: widthStyle, transition: "width 360ms cubic-bezier(.2,.9,.2,1)" }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current.id}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.36 }}
+          className="max-w-3xl mx-auto relative"
+        >
+          <div className="q-card">
+            <h3 className="font-semibold text-center text-lg">{current.question}</h3>
+          </div>
+
+          <div className="mt-6 grid gap-4">
+            {current.options.map((opt, idx) => {
+              const isSelected = answers[step - 1] === idx;
+              return (
+                <motion.div
+                  layout
+                  key={idx}
+                  onClick={() => selectOption(idx)}
+                  onKeyDown={(e) => { if (e.key === "Enter") selectOption(idx) }}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={isSelected}
+                  className={`option ${isSelected ? "selected" : ""} ${animating ? "pointer-events-none opacity-95" : ""}`}
+                  whileTap={!reduce ? { scale: 0.995 } : undefined}
+                >
+                  <div className="text-center font-medium">{opt}</div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <div className="mt-8 flex items-center justify-end gap-4">
+            <div className="flex items-center gap-3">
+              <div className={`nav-ctrl ${animating ? "opacity-60 pointer-events-none" : ""}`} onClick={prev} role="button" tabIndex={0}>←</div>
+              <div className={`nav-ctrl ${animating ? "opacity-60 pointer-events-none" : ""}`} onClick={next} role="button" tabIndex={0}>→</div>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}

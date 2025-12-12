@@ -1,0 +1,377 @@
+﻿/* ===================================
+   styles/globals.css
+   Replace your existing file with this
+   =================================== */
+
+/* 1) FONTS: must be first so postcss doesn't complain */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;600;700&family=Manrope:wght@400;500;600&display=swap');
+
+/* 2) CSS RESET (light) */
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #15313D;
+  background: linear-gradient(107.96deg, #BECFEE 0%, #71C6E2 50%, #D9F4FA 75%, #BECFEE 100%);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Outer blur / aurora (subtle, behind everything) */
+.aurora {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+  /* subtle extra glow */
+  filter: blur(20px);
+  opacity: 0.95;
+}
+
+/* Main page wrapper (centers the main card) */
+.main-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Card layers =====
+   outer-card: slightly larger, frosted look
+   inner-card: the white content surface
+*/
+.outer-card {
+  width: min(1542px, calc(100% - 120px));
+  border-radius: 50px;
+  padding: 22px;
+  background: linear-gradient(112.86deg, rgba(255, 255, 255, 0.36) -6.68%, rgba(255, 255, 255, 0.12) 45.63%, rgba(255, 255, 255, 0.36) 103.45%);
+  border: 0.7px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 44px 70px rgba(3, 45, 60, 0.08);
+  backdrop-filter: blur(6.9px);
+  position: relative;
+  z-index: 2;
+}
+
+.inner-card {
+  width: 100%;
+  border-radius: 42px;
+  background: #F4FDFF;
+  padding: 48px 96px;
+  min-height: 680px;
+  position: relative;
+  overflow: visible;
+}
+
+/* Title + subtitle */
+.title {
+  font-family: "DM Serif Display", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(48px, 6.5vw, 90px);
+  text-align: center;
+  margin: 6px 0 12px;
+  background: linear-gradient(90deg, #15313D 0%, #3CABDA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-family: "Manrope", "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #15313D;
+  opacity: 0.85;
+  text-align: center;
+  margin: 0 auto 28px;
+  display: block;
+  width: min(420px, 80%);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px 12px;
+}
+
+/* Progress bar group (the 4 small bars) */
+.progress-group {
+  display: flex;
+  gap: 42px;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0 28px;
+}
+
+.progress-item {
+  --bar-width: 216px;
+  width: var(--bar-width);
+  height: 8px;
+  background: rgba(227, 227, 227, 1);
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  position: relative;
+}
+
+/* the filled part of each segment */
+.progress-item .progress-fill {
+  position: absolute;
+  inset: 0 0 0 0;
+  width: 0%;
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #15313D 0%, #0C9FCB 100%);
+  transform-origin: left center;
+  transition: width 450ms cubic-bezier(.2, .9, .3, 1);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05) inset;
+}
+
+/* when you mark a segment filled, add .filled on the .progress-fill or set style width:100% */
+.progress-item .progress-fill.filled {
+  width: 100%;
+}
+
+/* QUESTION BOX */
+.question-box {
+  width: min(900px, 85%);
+  margin: 26px auto 0;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(198, 233, 247, 0.12) 0%, rgba(229, 248, 255, 0.08) 100%);
+  border: 1px solid rgba(150, 229, 255, 0.45);
+  padding: 28px;
+  box-shadow: 0 10px 34px rgba(3, 45, 60, 0.05);
+  position: relative;
+}
+
+/* the larger inner container that you asked about (slightly bigger box behind the options) */
+.question-inner {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(198, 233, 247, 0.08), rgba(213, 246, 255, 0.08));
+  padding: 28px;
+  border-radius: 12px;
+  margin-top: 6px;
+  box-shadow: 0 12px 30px rgba(3, 45, 60, 0.03);
+}
+
+/* question text */
+.question-title {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  color: #15313D;
+  margin: 0 0 18px;
+}
+
+/* OPTIONS (list) */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.option {
+  padding: 22px 28px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(198, 233, 247, 0.25), rgba(229, 248, 255, 0.25));
+  border: 1px solid rgba(150, 229, 255, 0.4);
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+  color: #15313D;
+  transition: background 220ms, transform 120ms, box-shadow 220ms;
+  box-shadow: 0 8px 26px rgba(3, 45, 60, 0.03);
+  user-select: none;
+}
+
+/* option hover + selected */
+.option:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(3, 45, 60, 0.06);
+}
+
+.option.selected {
+  background: linear-gradient(180deg, rgba(198, 233, 247, 0.4), rgba(213, 246, 255, 0.4));
+  box-shadow: 0 20px 50px rgba(12, 159, 203, 0.09);
+  border-color: rgba(12, 159, 203, 0.6);
+}
+
+/* nav buttons (back/next) bottom-right */
+.nav-buttons {
+  position: absolute;
+  right: 36px;
+  bottom: 26px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.nav-button {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: linear-gradient(89.72deg, #C6E9F7 0.09%, #E5F8FF 99.91%);
+  display: inline-grid;
+  place-items: center;
+  box-shadow: 0 6px 20px rgba(3, 45, 60, 0.06);
+  border: 1px solid rgba(150, 229, 255, 0.05);
+  cursor: pointer;
+}
+
+.nav-button svg {
+  width: 18px;
+  height: 18px;
+  color: #15313D;
+}
+
+/* paw badge & 'Best of Luck' bubble (left bottom) */
+.paw-viewport {
+  position: absolute;
+  left: 28px;
+  bottom: 22px;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  z-index: 3;
+  pointer-events: none;
+  /* decorative */
+}
+
+.badge-lick {
+  font-family: "Caveat", cursive;
+  font-size: 28px;
+  color: #15313D;
+  background: linear-gradient(90deg, #E6FBFF, #D8F3FA);
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(3, 45, 60, 0.06);
+  transform: rotate(-2.5deg);
+}
+
+.paw-graphic {
+  width: 118px;
+  height: 118px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  margin-left: -6px;
+  /* optional drop shadow to match screenshot */
+  filter: drop-shadow(0 6px 18px rgba(3, 45, 60, 0.08));
+}
+
+/* Result page styles - rolling counter area */
+.result-wrap {
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.keep-learning-pill {
+  background: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  box-shadow: 0 10px 22px rgba(3, 45, 60, 0.04);
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+.result-title {
+  font-family: "DM Serif Display";
+  font-style: italic;
+  font-size: 44px;
+  margin: 12px 0;
+  color: #15313D;
+}
+
+.result-number {
+  font-family: "DM Serif Display";
+  font-size: 120px;
+  line-height: 0.95;
+  color: #15313D;
+  margin: 18px 0 32px;
+}
+
+/* button / try again */
+.btn-primary {
+  background: linear-gradient(90deg, #C6E9F7, #E5F8FF);
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(3, 45, 60, 0.06);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Small helpers */
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive tweaks */
+@media (max-width: 960px) {
+  .inner-card {
+    padding: 28px 32px;
+    min-height: 540px;
+  }
+
+  .nav-buttons {
+    right: 18px;
+    bottom: 18px;
+  }
+
+  .title {
+    font-size: 42px;
+  }
+
+  .result-number {
+    font-size: 84px;
+  }
+
+  .question-box {
+    width: 100%;
+    padding: 18px;
+  }
+}
+
+/* Small utility tweaks so you can animate fades (JS can add/remove .fade) */
+.fade-enter {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-exit {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+/* END OF FILE */

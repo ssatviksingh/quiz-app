@@ -1,0 +1,15 @@
+﻿import Link from "next/link";
+
+export default function Home() {
+  return (
+    <div className="text-center">
+      <h1 className="h1-serif">Test Your Knowledge</h1>
+      <p className="mt-4 text-gray-600">Answer the questions to see your score</p>
+      <div className="mt-8">
+        <Link href="/quiz/1">
+          <button className="px-6 py-3 bg-gradient-to-r from-accent to-primary text-white rounded-lg shadow-md">Start Quiz</button>
+        </Link>
+      </div>
+    </div>
+  );
+}

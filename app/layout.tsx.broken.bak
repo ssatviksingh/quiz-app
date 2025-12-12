@@ -10,10 +10,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <main className="frame">
+        <main className="frame relative overflow-visible">
           {children}
+
+          {/* Paw + bubble placed bottom-left */}
+          
+            
+          </div>
         </main>
       </body>
     </html>
   );
 }
+

@@ -1,0 +1,134 @@
+﻿/* clean globals.css — tested safe for Next + Tailwind + Framer Motion */
+/* Google fonts (optional) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Page base */
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #d3eef7 0%, #cfeef9 35%, #e5fbff 100%);
+}
+
+/* Center frame */
+.frame {
+  max-width: 1180px;
+  margin: 48px auto;
+  padding: 40px;
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 40px 80px rgba(6, 35, 47, 0.12), inset 0 6px 18px rgba(255, 255, 255, 0.45);
+}
+
+/* Serif heading style */
+.h1-serif {
+  font-family: "Playfair Display", serif;
+  font-size: 56px;
+  font-weight: 700;
+  color: #0b3a40;
+  letter-spacing: -1px;
+}
+
+/* small helpers */
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* PROGRESS: segmented per-question track + fill */
+.progress-track {
+  height: 8px;
+  background: rgba(9, 20, 25, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 8px;
+  background: linear-gradient(90deg, #4AA3D6, #0E6B7B);
+  border-radius: 8px;
+  transition: width 360ms cubic-bezier(.2, .9, .2, 1);
+}
+
+/* Question card */
+.q-card {
+  border-radius: 14px;
+  padding: 22px;
+  background: linear-gradient(180deg, rgba(223, 246, 255, 0.95), rgba(239, 252, 255, 0.95));
+  border: 1px solid rgba(30, 140, 155, 0.06);
+  box-shadow: 0 18px 40px rgba(6, 35, 47, 0.06);
+  position: relative;
+}
+
+/* Option styles */
+.option {
+  border-radius: 12px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(219, 244, 252, 0.95), rgba(235, 250, 255, 0.95));
+  border: 1px solid rgba(30, 140, 155, 0.06);
+  cursor: pointer;
+  transition: transform .18s cubic-bezier(.2, .9, .2, 1), box-shadow .18s, background .18s;
+  box-shadow: 0 8px 18px rgba(6, 35, 47, 0.03);
+}
+
+.option:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 50px rgba(6, 35, 47, 0.08);
+}
+
+.option.selected {
+  background: linear-gradient(90deg, rgba(190, 229, 242, 0.98), rgba(223, 246, 255, 0.98));
+  border-color: rgba(30, 140, 155, 0.14);
+}
+
+/* nav controls */
+.nav-ctrl {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: rgba(227, 246, 252, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px rgba(6, 35, 47, 0.05);
+  cursor: pointer;
+}
+
+/* result number */
+.result-number {
+  font-family: "Playfair Display", serif;
+  font-size: 120px;
+  color: #0b3a40;
+  line-height: 0.95;
+}
+
+/* utility */
+.pointer-events-none {
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+
+  .option,
+  .progress-fill,
+  .q-card,
+  .nav-ctrl {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
