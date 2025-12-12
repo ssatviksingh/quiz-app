@@ -5,22 +5,14 @@
 A beautiful animated quiz UI built using Next.js + TypeScript, designed to match a Figma-style interactive test experience.
 
 🚀 Features
-
-Smooth question transitions
-
-Arrow-key navigation
-
-Answer highlighting
-
-Submit button on last question
-
-Animated score count-up
-
-Cross-fade transitions
-
-Clean UI with glassmorphism effects
-
-100% ready-to-run after install
+-Smooth question transitions
+-Arrow-key navigation
+-Answer highlighting
+-Submit button on last question
+-Animated score count-up
+-Cross-fade transitions
+-Clean UI with glassmorphism effects
+-100% ready-to-run after install
 
 
 ##🛠 Installation
